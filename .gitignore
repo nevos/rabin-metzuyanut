@@ -1,0 +1,30 @@
+# Runtime configuration (user-modified)
+config_runtime.json
+
+# Temporary audio files
+temp.wav
+temp_upload.wav
+temp_upload.webm
+backend/temp.wav
+
+# Python virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Conversation logs (contain user data)
+conversation.txt
+listen/listen_conversation_log.txt
+listen2/listen2_conversation_log.txt
+
+# IDE and OS files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (already in react-app/.gitignore but listing here too)
+node_modules/
