@@ -38,7 +38,10 @@ def listen_and_process():
     
     log_entry = f"{timestamp_input} input: {user_text}\n{timestamp_output} output: {ai_response}\n\n"
     
-    with open("listen/listen_conversation_log.txt", "a", encoding="utf-8") as f:
+    # Write to same directory as the script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    log_path = os.path.join(script_dir, "listen_conversation_log.txt")
+    with open(log_path, "a", encoding="utf-8") as f:
         f.write(log_entry)
     
     print("✓ נשמר לקובץ listen_conversation_log.txt")

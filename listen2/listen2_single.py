@@ -40,9 +40,13 @@ context = """אתה עוזר אדיב ודברן המסייע להסביר מו�
 """
 
 # Load history from log file
-def load_history_from_log(log_file="listen2/listen2_conversation_log.txt", max_exchanges=5):
+def load_history_from_log(max_exchanges=5):
     """Load the last N conversation exchanges from the log file"""
     history = []
+    
+    # Get log file in same directory as script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    log_file = os.path.join(script_dir, "listen2_conversation_log.txt")
     
     if not os.path.exists(log_file):
         return history
@@ -161,7 +165,10 @@ def listen_and_process():
     
     log_entry = f"{timestamp_input} input:\n{user_text}\n\n{timestamp_output} output:\n{ai_response}\n\n{'='*50}\n\n"
     
-    with open("listen2/listen2_conversation_log.txt", "a", encoding="utf-8") as f:
+    # Write to same directory as the script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    log_path = os.path.join(script_dir, "listen2_conversation_log.txt")
+    with open(log_path, "a", encoding="utf-8") as f:
         f.write(log_entry)
     
     print("✓ נשמר לקובץ listen2_conversation_log.txt", file=sys.stderr)

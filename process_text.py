@@ -42,14 +42,11 @@ def load_config():
         print(f"⚠️  Failed to load config: {e}", file=sys.stderr)
         sys.exit(1)
 
-# Initialize conversation history with context from config
+# Load configuration once at module level
 model_name, model_options, context = load_config()
-conversation_history = [{'role': 'system', 'content': context}]
 
 def process_text_input(user_text):
-    """Process text input and generate AI response"""
-    global conversation_history
-    
+    """Process text input and generate AI response (no history maintained)"""
     start_time = time.time()  # Track start time
     
     if not user_text or not user_text.strip():
@@ -59,13 +56,12 @@ def process_text_input(user_text):
     user_text = user_text.strip()
     print(f"קלט טקסט: {user_text}", file=sys.stderr)
     
-    # Add to conversation history
-    conversation_history.append({'role': 'user', 'content': user_text})
-    
-    # Keep only last 5 exchanges
-    max_messages = 11
-    if len(conversation_history) > max_messages:
-        conversation_history = [conversation_history[0]] + conversation_history[-10:]
+    # Create fresh conversation with only system context and current message
+    # No history is maintained between calls
+    conversation_history = [
+        {'role': 'system', 'content': context},
+        {'role': 'user', 'content': user_text}
+    ]
     
     # Get AI response with configured parameters
     try:
@@ -91,8 +87,7 @@ def process_text_input(user_text):
         print(f"שגיאה בקבלת תשובה מ-AI: {e}", file=sys.stderr)
         sys.exit(1)
     
-    # Add AI response to history
-    conversation_history.append({'role': 'assistant', 'content': ai_response})
+    # Note: No history maintained - each request is independent
     
     # Calculate response time
     end_time = time.time()
